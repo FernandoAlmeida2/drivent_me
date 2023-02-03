@@ -1,13 +1,13 @@
-import "reflect-metadata";
-import "express-async-errors";
-import express, { Express } from "express";
-import cors from "cors";
+import 'reflect-metadata';
+import 'express-async-errors';
+import express, { Express } from 'express';
+import cors from 'cors';
 
-import { loadEnv, connectDb, disconnectDB } from "@/config";
+import { loadEnv, connectDb, disconnectDB } from '@/config';
 
 loadEnv();
 
-import { handleApplicationErrors } from "@/middlewares";
+import { handleApplicationErrors } from '@/middlewares';
 import {
   usersRouter,
   authenticationRouter,
@@ -15,19 +15,21 @@ import {
   enrollmentsRouter,
   ticketsRouter,
   paymentsRouter,
-} from "@/routers";
+  hotelsRouter,
+} from '@/routers';
 
 const app = express();
 app
   .use(cors())
   .use(express.json())
-  .get("/health", (_req, res) => res.send("OK!"))
-  .use("/users", usersRouter)
-  .use("/auth", authenticationRouter)
-  .use("/event", eventsRouter)
-  .use("/enrollments", enrollmentsRouter)
-  .use("/tickets", ticketsRouter)
-  .use("/payments", paymentsRouter)
+  .get('/health', (_req, res) => res.send('OK!'))
+  .use('/users', usersRouter)
+  .use('/auth', authenticationRouter)
+  .use('/event', eventsRouter)
+  .use('/enrollments', enrollmentsRouter)
+  .use('/tickets', ticketsRouter)
+  .use('/payments', paymentsRouter)
+  .use('/hotels', hotelsRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
